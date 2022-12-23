@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Guess my Number</h1>
+
+    <p>1-100 arasında bir sayı seçiniz.</p>
+    <label for="guess-input"><span id="tahminSayisi">1</span>.Tahmin</label>
+    <input type="number" id="guess-input">
+    <input type="submit" value="Kontrol" id="kontrolBtn">
+    <hr>
+    <p id="msg">Başlıyor..</p>
+    <p id="score-label">Score:<span id="score">7</span></p>
+    <p id="adet"></p>
+
+
+    <script>
+        let randomNumber = Math.round(Math.random() * 100);
+        let score = 7;
+        let tahminSayisi = 1
+
+        document.getElementById("kontrolBtn").addEventListener("click", () => {
+            const guessInput = Number(document.getElementById("guess-input").value);
+            const msg = document.getElementById("msg");
+            const adet = document.getElementById("adet")
+
+            if (!guessInput) {
+                msg.innerText = "Lütfen bir sayı giriniz.";
+            } else if (randomNumber === guessInput) {
+                msg.innerHTML = "Tebrikler Kazandınız!"
+                document.getElementById("kontrolBtn").disabled = true;
+                adet.innerHTML = `${tahminSayisi} defa da bildiniz`
+            } else {
+                score--;
+                tahminSayisi++;
+                if (score > 0) {
+                    guessInput > randomNumber ?
+                        (msg.innerHTML = `Azaltın`) :
+                        (msg.innerHTML = `Arttırın`)
+                } else {
+                    msg.innerHTML = `Kaybettiniz`;
+                    document.getElementById("secret-number").textContent = randomNumber;
+                    document.getElementById("kontrolBtn").disabled = true;
+                }
+                document.getElementById("score").textContent = score;
+                document.getElementById("tahminSayisi").innerHTML = `${tahminSayisi}`
+            }
+
+        });
+    </script>
+</body>
+
+</html>
